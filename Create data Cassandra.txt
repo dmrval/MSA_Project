@@ -1,0 +1,32 @@
+CREATE KEYSPACE BankAccountDB WITH replication = {'class': 'SimpleStrategy', 'replication_factor':2};
+
+
+
+CREATE TYPE bankaccountdb.address (
+                   street text,
+                   city text,
+                   state text
+                   )
+
+CREATE TYPE bankaccountdb.bankAccount (
+                   UUID uuid,
+                   firstName text,
+                   lastName text,
+                   patronymic text,
+                   accountNumber bigint,
+                   accountType text
+                   )
+
+
+create table bankaccountdb.bankAccountInfo
+               (
+                   uuid uuid primary key, 
+                   BankAccount bankAccount,
+                   Address address
+               )
+
+
+INSERT INTO bankaccountdb.bankaccountinfo (uuid, bankaccount, address)
+               VALUES (eea0b172-bca4-435e-9bb1-58d86096d4e8,
+                       {uuid:eea0b172-bca4-435e-9bb1-58d86096d4e8,firstname:'firstname',lastname:'lastname',patronymic:'patronymic',accountnumber:654654,accounttype:'accounttype'},
+                       { street:'street',city:'city',state:'state'})

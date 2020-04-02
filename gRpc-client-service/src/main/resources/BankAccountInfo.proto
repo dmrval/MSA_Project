@@ -1,0 +1,42 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package ru.dmrval.entity;
+
+service BankAccountInfoService {
+    rpc getAccountsByType(BankAccountInfoRequest) returns (BankAccountInfoResponse);
+}
+
+message BankAccountInfoRequest {
+    string typeName = 1;
+}
+
+message BankAccountInfoResponse {
+  repeated BankAccountInfo bankAccountInfo = 1;
+}
+
+ message BankAccountInfo {
+       Address address = 1;
+       BankAccount bankAccount = 2;
+    }
+
+message BankAccount {
+    string uuid = 1;
+    string firstName = 2;
+    string lastName = 3;
+    string patronymic = 4;
+    int64 accountNumber = 5;
+    AccountType type = 6;
+    }
+
+message Address {
+     string street = 1;
+     string city = 2;
+     string state = 3;
+    }
+
+enum AccountType {
+                 GOLD = 0;
+                 PREMIUM = 1;
+                 BASE = 2;
+                 }
+
