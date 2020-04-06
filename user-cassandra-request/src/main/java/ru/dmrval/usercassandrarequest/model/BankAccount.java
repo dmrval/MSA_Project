@@ -34,5 +34,7 @@ public class BankAccount {
     accountType = bankAccount.getAccountType();
   }
 
-
+  public BankAccount(UUID fromString) {
+    uuid = fromString;
+  }
 }

@@ -22,14 +22,7 @@ public class MyProducer {
 
   @Scheduled(fixedDelay = 5000)
   public void pushInKafka() {
-    BankAccountResponse bankAccountResponse =
-        webClientBuilder
-            .build()
-            .get()
-            .uri("http://localhost:8085/generate/" + 10)
-            .retrieve()
-            .bodyToMono(BankAccountResponse.class)
-            .block();
+    BankAccountResponse bankAccountResponse = getRandomBankAccounts(10);
     bankAccountResponse
         .getBankAccounts()
         .forEach(
@@ -45,6 +38,16 @@ public class MyProducer {
             });
     //  Не закрывать если рабоатет Sheduler
     //    producer.close();
+  }
+
+  private BankAccountResponse getRandomBankAccounts(int count) {
+    return webClientBuilder
+        .build()
+        .get()
+        .uri("http://localhost:8085/generate/" + count)
+        .retrieve()
+        .bodyToMono(BankAccountResponse.class)
+        .block();
   }
 
   private AccountType getRandomAccountType() {
