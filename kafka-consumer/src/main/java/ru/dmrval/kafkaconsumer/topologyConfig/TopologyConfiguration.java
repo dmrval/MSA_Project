@@ -49,8 +49,6 @@ public class TopologyConfiguration {
             BankAccountInfo::new,
             Materialized.with(Serdes.String(), new JsonSerde<>(BankAccountInfo.class)));
 
-    bankAccoultInfoKTable.toStream().print(Printed.toSysOut());
-
     bankAccoultInfoKTable.toStream().to("newBankAccountInfoTopic");
 
     bankAccoultInfoKTable
