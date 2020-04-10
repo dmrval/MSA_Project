@@ -1,6 +1,5 @@
 package ru.dmrval.gRpcservice.serverConfig;
 
-
 import io.grpc.stub.StreamObserver;
 import org.springframework.stereotype.Service;
 import ru.dmrval.entity.*;

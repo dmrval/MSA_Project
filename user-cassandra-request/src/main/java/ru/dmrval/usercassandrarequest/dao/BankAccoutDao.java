@@ -23,21 +23,33 @@ public class BankAccoutDao {
     Iterator<Row> iterator = execute.iterator();
     BankAccount bankAccount = new BankAccount();
     Address address = new Address();
+    parseIterator(iterator, address, bankAccount);
+    BankAccountInfo bankAccountInfo = new BankAccountInfo(bankAccount, address);
+    return bankAccountInfo;
+  }
+
+  private void parseIterator(Iterator<Row> iterator, Address address, BankAccount bankAccount) {
     while (iterator.hasNext()) {
       Row row = iterator.next();
       UDTValue addressValue = (UDTValue) row.getObject(1);
-      address.setStreet(addressValue.getString(0));
-      address.setCity(addressValue.getString(1));
-      address.setState(addressValue.getString(2));
+      parseAddress(addressValue, address);
       UDTValue bankAccountValue = (UDTValue) row.getObject(2);
-      bankAccount.setUuid(bankAccountValue.getUUID(0));
-      bankAccount.setFirstName(bankAccountValue.getString(1));
-      bankAccount.setLastName(bankAccountValue.getString(2));
-      bankAccount.setPatronymic(bankAccountValue.getString(3));
-      bankAccount.setAccountNumber(bankAccountValue.getLong(4));
-      bankAccount.setAccountType(AccountType.valueOf(bankAccountValue.getString(5)));
+      parseBankAccount(bankAccountValue, bankAccount);
     }
-    BankAccountInfo bankAccountInfo = new BankAccountInfo(bankAccount, address);
-    return bankAccountInfo;
+  }
+
+  private void parseAddress(UDTValue addressValue, Address address) {
+    address.setStreet(addressValue.getString(0));
+    address.setCity(addressValue.getString(1));
+    address.setState(addressValue.getString(2));
+  }
+
+  private void parseBankAccount(UDTValue bankAccountValue, BankAccount bankAccount) {
+    bankAccount.setUuid(bankAccountValue.getUUID(0));
+    bankAccount.setFirstName(bankAccountValue.getString(1));
+    bankAccount.setLastName(bankAccountValue.getString(2));
+    bankAccount.setPatronymic(bankAccountValue.getString(3));
+    bankAccount.setAccountNumber(bankAccountValue.getLong(4));
+    bankAccount.setAccountType(AccountType.valueOf(bankAccountValue.getString(5)));
   }
 }

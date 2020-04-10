@@ -1,6 +1,5 @@
 package ru.dmrval.gRpcservice.serverConfig;
 
-
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import lombok.SneakyThrows;

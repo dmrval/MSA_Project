@@ -10,9 +10,9 @@ import ru.dmrval.usercassandrarequest.model.BankAccountInfo;
 
 @RestController
 @RequestMapping("/getByuuid")
-public class GeneratorBankAccount {
+public class UserCassandraRequest {
 
-  @Autowired BankAccoutDao bankAccoutDao;
+  @Autowired private BankAccoutDao bankAccoutDao;
 
   @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
   public BankAccountInfo getBankAccountByUuid(@PathVariable("uuid") String uuid) {
