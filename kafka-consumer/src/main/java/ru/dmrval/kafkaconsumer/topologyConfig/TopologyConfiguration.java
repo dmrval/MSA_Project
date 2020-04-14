@@ -1,7 +1,6 @@
 package ru.dmrval.kafkaconsumer.topologyConfig;
 
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.Consumed;
@@ -34,6 +33,20 @@ public class TopologyConfiguration {
         streamsBuilder.table(
             "bankAccountTopic", Consumed.with(Serdes.String(), new JsonSerde<>(BankAccount.class)));
 
+    //    StoreBuilder<KeyValueStore<String, String>> keyValueStoreBuilder =
+    //        Stores.keyValueStoreBuilder(
+    //            Stores.persistentKeyValueStore("myTransformState"),
+    //            Serdes.String(),
+    //            Serdes.String());
+    //    // register store
+    //    streamsBuilder.addStateStore(keyValueStoreBuilder);
+    //
+    //    KStream outputStream =
+    //        bankAccountKTable
+    //            .toStream()
+    //            .transform(new BankAccountTransformerSupplier(), "myTransformState");
+    //    outputStream.print(Printed.toSysOut());
+
     JsonDeserializer<Address> jsonDeserializer = new JsonDeserializer<>(Address.class);
     JsonDeserializer<Address> addressJsonDeserializer = jsonDeserializer.ignoreTypeHeaders();
     JsonSerializer<Address> jsonSerializer = new JsonSerializer<>();
@@ -50,15 +63,16 @@ public class TopologyConfiguration {
             Materialized.with(Serdes.String(), new JsonSerde<>(BankAccountInfo.class)));
 
     bankAccoultInfoKTable.toStream().to("newBankAccountInfoTopic");
+    bankAccoultInfoKTable.toStream().print(Printed.toSysOut());
 
     bankAccoultInfoKTable
         .toStream()
         .foreach((s, bankAccountInfo) -> bankAccoutInfoDao.addBankAccountInfo(s, bankAccountInfo));
 
     Topology topology = streamsBuilder.build();
-    KafkaStreams kafkaStreams =
-        new KafkaStreams(topology, defaultKafkaStreamsConfig.asProperties());
-    kafkaStreams.start();
+    System.out.println("==============================");
+    System.out.println(topology.describe());
+    System.out.println("==============================");
     return topology;
   }
 }

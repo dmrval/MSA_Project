@@ -36,17 +36,7 @@ public class KafkaConsumerApplication {
     return session;
   }
 
-  @Bean(name = KafkaStreamsDefaultConfiguration.DEFAULT_STREAMS_CONFIG_BEAN_NAME)
-  public KafkaStreamsConfiguration getStreamsConfig() {
-    Map<String, Object> props = new HashMap<>();
-    props.put(StreamsConfig.APPLICATION_ID_CONFIG, "bankAccountWithAddress");
-    props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-    props.put(StreamsConfig.NUM_STREAM_THREADS_CONFIG, "4");
-    props.put(
-        StreamsConfig.DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG,
-        LogAndContinueExceptionHandler.class);
-    return new KafkaStreamsConfiguration(props);
-  }
+
 
   public static void main(String[] args) {
     SpringApplication.run(KafkaConsumerApplication.class, args);
