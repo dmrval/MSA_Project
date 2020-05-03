@@ -2,6 +2,7 @@ package ru.dmrval.kafkaproducer.config;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -23,6 +24,9 @@ public class MyProducer {
   @Autowired private Random random;
   @Autowired private BankAccountRepository bankAccountRepository;
 
+  @Value("${url.random.bank.accounts}")
+  String URL;
+
   @Scheduled(fixedDelay = 5000)
   public void pushInKafka() {
     BankAccountResponse bankAccountResponse = getRandomBankAccounts(10);
@@ -31,7 +35,6 @@ public class MyProducer {
         .forEach(
             bankAccount -> {
               bankAccount.setAccountType(getRandomAccountType());
-              // фильтрует Uuid который начинается на цифру 5
               if (bankAccount.getUuid().toString().charAt(0) == '5') {
                 return;
               }
@@ -39,17 +42,15 @@ public class MyProducer {
                   new ProducerRecord<>(
                       IKafkaConstants.TOPIC_NAME, bankAccount.getUuid().toString(), bankAccount));
 
-                bankAccountRepository.save(bankAccount);
+              bankAccountRepository.save(bankAccount);
             });
-    //  Не закрывать если рабоатет Sheduler
-    //    producer.close();
   }
 
   private BankAccountResponse getRandomBankAccounts(int count) {
     return webClientBuilder
         .build()
         .get()
-        .uri("http://localhost:8085/generate/" + count)
+        .uri(URL + count)
         .retrieve()
         .bodyToMono(BankAccountResponse.class)
         .block();

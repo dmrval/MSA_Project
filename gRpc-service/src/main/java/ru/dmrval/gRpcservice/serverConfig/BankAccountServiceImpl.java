@@ -45,7 +45,6 @@ public class BankAccountServiceImpl
     List<BankAccountInfo> resultList = new ArrayList<>();
     inputList.forEach(
         bankAccountInfo -> {
-          AccountType accountType = AccountType.GOLD;
           Address address =
               Address.newBuilder()
                   .setCity(bankAccountInfo.getAddress().getCity())

@@ -16,6 +16,7 @@ public class BankAccount {
   private String lastName;
   private String patronymic;
   private long accountNumber;
+  private AccountType accountType;
 
   public BankAccount(ru.dmrval.entity.BankAccount bankAccount) {
     this.uuid = UUID.fromString(bankAccount.getUuid());
@@ -23,5 +24,6 @@ public class BankAccount {
     this.lastName = bankAccount.getLastName();
     this.patronymic = bankAccount.getPatronymic();
     this.accountNumber = bankAccount.getAccountNumber();
+    this.accountType = AccountType.valueOf(bankAccount.getType().name());
   }
 }

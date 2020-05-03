@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "ru.*")
+@ComponentScan(basePackages = "ru.dmrval.*")
 public class GRpcServiceApplication {
 
   @Value("${cassandra.point}")
@@ -26,8 +26,7 @@ public class GRpcServiceApplication {
             .addContactPoint(point)
             .withCredentials(userPass, userPass)
             .build();
-    Session session = cluster.connect("bankaccountdb");
-    return session;
+    return cluster.connect("bankaccountdb");
   }
 
   public static void main(String[] args) {

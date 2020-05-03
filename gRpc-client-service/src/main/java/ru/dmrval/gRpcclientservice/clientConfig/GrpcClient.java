@@ -3,6 +3,7 @@ package ru.dmrval.gRpcclientservice.clientConfig;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.dmrval.entity.BankAccountInfoRequest;
 import ru.dmrval.entity.BankAccountInfoResponse;
@@ -17,11 +18,15 @@ import java.util.List;
 @Service(value = "grpcClient")
 public class GrpcClient {
 
+  @Value("${grpc.server.address}")
+  String address;
+
+  @Value("${grpc.server.port}")
+  int port;
+
   @SneakyThrows
   public List<BankAccountInfo> startClient(String accountType) {
-    ManagedChannel channel =
-        ManagedChannelBuilder.forAddress("127.0.0.1", 8084).usePlaintext().build();
-
+    ManagedChannel channel = ManagedChannelBuilder.forAddress(address, port).usePlaintext().build();
     BankAccountInfoServiceGrpc.BankAccountInfoServiceBlockingStub stub =
         BankAccountInfoServiceGrpc.newBlockingStub(channel);
 

@@ -12,13 +12,13 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/checkGrpc")
+@RequestMapping(value = "/getBankAccountsInfoByGRpc")
 public class ControllerForCheckGrpc {
 
   @Autowired GrpcClient grpcClient;
 
-  @RequestMapping(value = "{status}")
-  public List<BankAccountInfo> getBankAccountsInfoByType(@PathVariable("status") String status) {
+  @RequestMapping(value = "{byStatus}")
+  public List<BankAccountInfo> getBankAccountsInfoByType(@PathVariable("byStatus") String status) {
     for (AccountType type : AccountType.values()) {
       if (type.name().equalsIgnoreCase(status)) {
         return grpcClient.startClient(status);
