@@ -7,4 +7,8 @@ import ru.dmrval.goldstatusproducer.requestbankaccountinfos.BankAccountInfoReque
 public interface BankAccountInfoRepository {
 
   Flux<BankAccountInfo> saveAll();
+
+  default void test() {
+    System.out.println();
+  }
 }
