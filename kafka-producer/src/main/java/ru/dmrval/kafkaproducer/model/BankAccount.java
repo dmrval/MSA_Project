@@ -5,13 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.serialization.Serializer;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
+@RedisHash
 public class BankAccount implements Serializer<BankAccount> {
+  @Id
   private UUID uuid;
   private String firstName;
   private String lastName;

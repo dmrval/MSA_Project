@@ -1,4 +1,4 @@
-package ru.dmrval.kafkaproducer.config;
+package ru.dmrval.kafkaproducer.config.kafka;
 
 import org.apache.kafka.common.serialization.StringSerializer;
 import ru.dmrval.kafkaproducer.model.BankAccount;

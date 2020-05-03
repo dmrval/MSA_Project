@@ -7,6 +7,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.reactive.function.client.WebClient;
+import ru.dmrval.kafkaproducer.config.kafka.IKafkaConstants;
+import ru.dmrval.kafkaproducer.config.redis.repository.BankAccountRepository;
 import ru.dmrval.kafkaproducer.model.AccountType;
 import ru.dmrval.kafkaproducer.model.BankAccountResponse;
 
@@ -19,6 +21,7 @@ public class MyProducer {
   @Autowired private KafkaTemplate kafkaTemplate;
   @Autowired private WebClient.Builder webClientBuilder;
   @Autowired private Random random;
+  @Autowired private BankAccountRepository bankAccountRepository;
 
   @Scheduled(fixedDelay = 5000)
   public void pushInKafka() {
@@ -35,6 +38,8 @@ public class MyProducer {
               kafkaTemplate.send(
                   new ProducerRecord<>(
                       IKafkaConstants.TOPIC_NAME, bankAccount.getUuid().toString(), bankAccount));
+
+                bankAccountRepository.save(bankAccount);
             });
     //  Не закрывать если рабоатет Sheduler
     //    producer.close();

@@ -28,7 +28,10 @@ public class ClientController {
 
   @GetMapping("/showAllBankAccountInfos")
   Flux<BankAccountInfo> findAllBankAccountInfos() {
-    return this.requester.route("request-stream").retrieveFlux(BankAccountInfo.class);
+    Flux<BankAccountInfo> bankAccountInfoFlux =
+        this.requester.route("request-stream").retrieveFlux(BankAccountInfo.class);
+    bankAccountInfoFlux.subscribe(System.err::println);
+    return bankAccountInfoFlux;
   }
 
   @PostMapping("/deleteBankAccountInfo/{id}")

@@ -29,7 +29,6 @@ class KafkaConsumerApplicationTests {
 
   @BeforeEach
   public void setup() {
-
     KafkaStreamsConfiguration config = new KafkaConfiguration().getStreamsConfig();
     Topology topology = new TopologyConfiguration().createTopology(new StreamsBuilder());
     topologyTestDriver = new TopologyTestDriver(topology, config.asProperties());

@@ -17,7 +17,7 @@ public class RSocketConfiguration {
 
     @Bean
     RSocketRequester rSocketRequester(RSocketStrategies strategies) {
-        InetSocketAddress address = new InetSocketAddress("localhost", 7000);
+        InetSocketAddress address = new InetSocketAddress("localhost", 7001);
 
         return RSocketRequester.builder()
                 .rsocketFactory(factory -> factory

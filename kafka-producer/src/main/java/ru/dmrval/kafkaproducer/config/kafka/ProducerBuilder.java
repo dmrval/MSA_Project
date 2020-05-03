@@ -1,4 +1,4 @@
-package ru.dmrval.kafkaproducer.config;
+package ru.dmrval.kafkaproducer.config.kafka;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import ru.dmrval.kafkaproducer.model.BankAccount;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ru.dmrval.kafkaproducer.config.IKafkaConstants.*;
+import static ru.dmrval.kafkaproducer.config.kafka.IKafkaConstants.*;
 
 
 @Configuration
