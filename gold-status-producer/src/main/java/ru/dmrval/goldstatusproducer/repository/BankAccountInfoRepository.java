@@ -8,7 +8,7 @@ public interface BankAccountInfoRepository {
 
   Flux<BankAccountInfo> saveAll();
 
-  default void test() {
+  default void test(int i) {
     System.out.println();
   }
 }
