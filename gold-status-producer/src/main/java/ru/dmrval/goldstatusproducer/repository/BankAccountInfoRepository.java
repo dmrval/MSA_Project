@@ -1,12 +1,8 @@
 package ru.dmrval.goldstatusproducer.repository;
 
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import ru.dmrval.goldstatusproducer.model.BankAccountInfo;
 
 public interface BankAccountInfoRepository {
-  Flux<BankAccountInfo> saveAll();
-
-  default void test(int i) {
-    System.out.println();
-  }
+    Mono<BankAccountInfo> save(BankAccountInfo bankAccountInfo);
 }

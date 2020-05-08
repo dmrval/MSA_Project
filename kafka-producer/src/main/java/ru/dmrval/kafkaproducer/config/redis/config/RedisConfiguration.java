@@ -12,9 +12,6 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
 @Configuration
 public class RedisConfiguration {
 
-  @Value("${database.number}")
-  private int database;
-
   @Bean
   public RedisConnectionFactory redisConnectionFactory() {
     RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();

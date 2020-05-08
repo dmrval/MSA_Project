@@ -3,7 +3,6 @@ package ru.dmrval.goldstatusproducer.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
-import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
@@ -14,7 +13,7 @@ import ru.dmrval.goldstatusproducer.model.BankAccountInfo;
 public class RedisConfiguration {
 
   @Bean
-  ReactiveRedisOperations<String, BankAccountInfo> redisOperations(
+  public ReactiveRedisTemplate<String, BankAccountInfo> reactiveRedisTemplate(
       ReactiveRedisConnectionFactory factory) {
     Jackson2JsonRedisSerializer<BankAccountInfo> serializer =
         new Jackson2JsonRedisSerializer<>(BankAccountInfo.class);
@@ -23,5 +22,4 @@ public class RedisConfiguration {
     RedisSerializationContext<String, BankAccountInfo> context = builder.value(serializer).build();
     return new ReactiveRedisTemplate<>(factory, context);
   }
-
 }
