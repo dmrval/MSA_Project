@@ -1,4 +1,4 @@
-package ru.dmrval.goldstatusproducer.model;
+package ru.dmrval.redisreactivemsa.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
